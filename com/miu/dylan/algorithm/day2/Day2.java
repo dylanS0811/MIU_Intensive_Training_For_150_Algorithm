@@ -12,8 +12,14 @@ public class Day2 {
         // System.out.println(day2.isGuthrieSequence(new int[] {6, 3, 10, 5, 16, 8, 4, 2, 1}));
         // System.out.println(day2.stantonMeasure(new int[] {1, 3, 1, 1, 3, 3, 2, 3, 3, 3, 4}));
         // System.out.println(day2.sumFactor(new int[] {0, 0, 0}));
-
-
+        // System.out.println(day2.guthrieIndex(342934392));
+        // int[] result = day2.solve10();
+        // if (result.length == 2 && result[0] != -1 && result[1] != -1) {
+        //     System.out.println("x =" + result[0] + ", y= " + result[1]);
+        // } else {
+        //     System.out.println("No solution found");
+        // }
+        // System.out.println(day2.repsEqual(new int[] {0, 0, 3, 2, 0, 5, 3}, 32053));
     }
 
     /**
@@ -201,28 +207,94 @@ public class Day2 {
     /**
      * num 11
      * <p>
-     * Time Complexity: The time complexity is
+     * Time Complexity: The time complexity is O(m), where m is the number of steps required to reduce n to 1, this depends on the value of n and the sequence of the transformations.
      * <p>
-     * Space Complexity: The space complexity is
+     * Space Complexity: The space complexity is O(n), since we only use a fixed amount of extra space of the counter and the variable n.
      *
      */
+    private int guthrieIndex(int n) {
+        if (n <= 0) {
+            return 0;
+        }
+
+        int count = 0; // Initialize the counter
+
+        // Apply the algorithm until n becomes 1
+        while (n != 1) {
+            // Step 1: Check if the n is even -> divide it by 2
+            if (n % 2 ==0) {
+                n = n / 2;
+            } else {
+                // Step 2: If the n is odd -> multiply it by 3 and add 1
+                n = n * 3 + 1;
+            }
+            count ++; // Increment the counter
+        }
+
+        return count; // return the Guthrie index
+    }
 
     /**
      * num 12
      * <p>
-     * Time Complexity: The time complexity is
+     * Time Complexity: The time complexity is O(n2), where n is 10 in this case, as we are iterating through all pairs of x and y up to 10.
      * <p>
-     * Space Complexity: The space complexity is
+     * Space Complexity: The space complexity is O(n) since we only use a fixed amount of extra space for the variables and result array.
      *
      */
+    private int[ ] solve10() {
+        for (int x = 0; x <= 10; x++) {
+            for (int y = 0; y <= 10; y++) {
+                if (factorial(x) + factorial(y) == factorial(10)) {
+                    return new int[] {x, y};
+                }
+            }
+        }
+
+        return new int[]{-1, -1}; // In case no solution is found
+    }
+
+
+    private int factorial(int n) {
+        int result = 1;
+        for (int i = 1; i <= n; i++) {
+            result *= i;
+        }
+
+        return result;
+    }
 
     /**
      * num 13
      * <p>
-     * Time Complexity: The time complexity is
+     * Time Complexity: The time complexity is O(n), where n is the length of the array because we need to iterate through the array to compare each digit.
      * <p>
-     * Space Complexity: The space complexity is
+     * Space Complexity: The space complexity is O(1), as we don't use any additional space to store data.
      *
      */
+    private int repsEqual(int[] a, int n) {
+        // Step 1: Convert int to a String for compare each digit
+        String numStr = String.valueOf(n);
+
+        // Step 2:
+        int numStrLength = numStr.length();
+
+        // Step 3: Compare each digit from the end of the array to the beginning
+        int index = a.length - numStrLength;
+
+        // if the length of the array is less then the length of the number, return 0
+        if (index < 0) {
+            return 0;
+        }
+
+        // Step 4: Compare each digit in the array to the with corresponding digit in the integer
+        for(int i = 0; i < numStrLength; i++) {
+            if (a[index + i] != Character.getNumericValue(numStr.charAt(i))) {
+                return 0;
+            }
+        }
+
+        return 1;
+    }
 
 }
