@@ -4,7 +4,7 @@ package com.miu.dylan.algorithm.day2;
  * day2 with 8 functions
  */
 public class Day2 {
-    public static void main(String [] args) {
+    public static void main(String[] args) {
 
         Day2 day2 = new Day2();
         // System.out.println(day2.countSquarePairs(new int[] {9, 0, 2, -5, 7}));
@@ -29,7 +29,7 @@ public class Day2 {
      * <p>
      * Space Complexity: The space complexity is O(1) because we only use a fixed amount of extra space for the variables.
      */
-    private int countSquarePairs(int[ ] a) {
+    private int countSquarePairs(int[] a) {
         // Step 1: Check if the array length is greater than 2.
         if (a.length <= 2) {
             return 0; // Array must have at least 2 elements.
@@ -41,9 +41,9 @@ public class Day2 {
         int count = 0;
 
         for (int i = 0; i < a.length; i++) {
-            for (int j =0; j < a.length; j++) {
+            for (int j = 0; j < a.length; j++) {
                 if (i != j && a[i] > 0 && a[j] > 0 && a[i] < a[j] && isPerfectSquare(a[i] + a[j])) {
-                    count ++;
+                    count++;
                 }
             }
         }
@@ -57,12 +57,10 @@ public class Day2 {
             return false;
         }
 
-        int sqrt = (int)Math.sqrt(num);
+        int sqrt = (int) Math.sqrt(num);
 
         return sqrt * sqrt == num;
     }
-
-
 
     /**
      * num 7
@@ -70,7 +68,6 @@ public class Day2 {
      * Time Complexity: The time complexity difficult to define precisely because it depends on the distribution of prime numbers. On average, it is O(n log log n) for finding primes.
      * <p>
      * Space Complexity: The space complexity is O(1) because we only use a fixed amount of extra space for the variables.
-     *
      */
     private int findPorcupineNumber(int n) {
 
@@ -82,7 +79,7 @@ public class Day2 {
                 int nextNum = num + 1;
                 // Step 3: Find the next number that is the prime
                 while (!isPrime(nextNum)) {
-                    nextNum ++;
+                    nextNum++;
                 }
                 // Step 4: Check if the next prime number also ends in 9.
                 if (nextNum % 10 == 9) {
@@ -90,7 +87,7 @@ public class Day2 {
                     return num;
                 }
             }
-            num ++;
+            num++;
         }
     }
 
@@ -113,23 +110,21 @@ public class Day2 {
         return true;
     }
 
-
     /**
      * num 8
      * <p>
      * Time Complexity: The time complexity is O(n) where n is the length of the array, as we are iterating through the array once.
      * <p>
      * Space Complexity: The space complexity is O(1) as we only use a fixed amount of extra space for the variables.
-     *
      */
-    private int isGuthrieSequence(int[ ] a) {
+    private int isGuthrieSequence(int[] a) {
         if (a.length == 0) {
             return 0; // An empty array cannot be a Guthrie sequence.
         }
 
         int current = a[0];
 
-        for (int i = 1; i < a.length; i ++) {
+        for (int i = 1; i < a.length; i++) {
             // Step 1: Check if the current is even, / 2
             if (current % 2 == 0) {
                 current = current / 2;
@@ -149,17 +144,14 @@ public class Day2 {
         return a[a.length - 1] == 1 ? 1 : 0;
     }
 
-
-
     /**
      * num 9
      * <p>
      * Time Complexity: The time complexity is O(n), where n is the length of the array, as we need to traverse the array twice.
      * <p>
      * Space Complexity: The space complexity is O(1) since we only use a fixed amount of extra space for the variables.
-     *
      */
-    private int stantonMeasure(int[ ] a) {
+    private int stantonMeasure(int[] a) {
         int countForOne = 0;
         for (int j : a) {
             if (j == 1) {
@@ -183,9 +175,8 @@ public class Day2 {
      * Time Complexity: The time complexity is O(n),where n is the length of the array, we need to traverse the array twice.
      * <p>
      * Space Complexity: The space complexity is O(1) since we only use a fixed amount of extra space for the variables.
-     *
      */
-    private int sumFactor(int[ ] a) {
+    private int sumFactor(int[] a) {
 
         // Step 1: Calculate the sum of the array elements.
         int sum = 0;
@@ -197,7 +188,7 @@ public class Day2 {
         int countOfSumFactor = 0;
         for (int i : a) {
             if (i == sum) {
-                countOfSumFactor ++;
+                countOfSumFactor++;
             }
         }
 
@@ -210,7 +201,6 @@ public class Day2 {
      * Time Complexity: The time complexity is O(m), where m is the number of steps required to reduce n to 1, this depends on the value of n and the sequence of the transformations.
      * <p>
      * Space Complexity: The space complexity is O(n), since we only use a fixed amount of extra space of the counter and the variable n.
-     *
      */
     private int guthrieIndex(int n) {
         if (n <= 0) {
@@ -222,13 +212,13 @@ public class Day2 {
         // Apply the algorithm until n becomes 1
         while (n != 1) {
             // Step 1: Check if the n is even -> divide it by 2
-            if (n % 2 ==0) {
+            if (n % 2 == 0) {
                 n = n / 2;
             } else {
                 // Step 2: If the n is odd -> multiply it by 3 and add 1
                 n = n * 3 + 1;
             }
-            count ++; // Increment the counter
+            count++; // Increment the counter
         }
 
         return count; // return the Guthrie index
@@ -240,20 +230,18 @@ public class Day2 {
      * Time Complexity: The time complexity is O(n2), where n is 10 in this case, as we are iterating through all pairs of x and y up to 10.
      * <p>
      * Space Complexity: The space complexity is O(n) since we only use a fixed amount of extra space for the variables and result array.
-     *
      */
-    private int[ ] solve10() {
+    private int[] solve10() {
         for (int x = 0; x <= 10; x++) {
             for (int y = 0; y <= 10; y++) {
                 if (factorial(x) + factorial(y) == factorial(10)) {
-                    return new int[] {x, y};
+                    return new int[]{x, y};
                 }
             }
         }
 
         return new int[]{-1, -1}; // In case no solution is found
     }
-
 
     private int factorial(int n) {
         int result = 1;
@@ -270,7 +258,6 @@ public class Day2 {
      * Time Complexity: The time complexity is O(n), where n is the length of the array because we need to iterate through the array to compare each digit.
      * <p>
      * Space Complexity: The space complexity is O(1), as we don't use any additional space to store data.
-     *
      */
     private int repsEqual(int[] a, int n) {
         // Step 1: Convert int to a String for compare each digit
@@ -288,7 +275,7 @@ public class Day2 {
         }
 
         // Step 4: Compare each digit in the array to the with corresponding digit in the integer
-        for(int i = 0; i < numStrLength; i++) {
+        for (int i = 0; i < numStrLength; i++) {
             if (a[index + i] != Character.getNumericValue(numStr.charAt(i))) {
                 return 0;
             }

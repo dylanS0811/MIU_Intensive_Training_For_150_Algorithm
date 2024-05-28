@@ -6,11 +6,11 @@ package com.miu.dylan.algorithm.day1;
 public class Day1 {
     public static void main(String[] args) {
         Day1 day1 = new Day1();
-        System.out.println(day1.isPerfectSquare(-5));
-        System.out.println(day1.nUpCount(new int[] {2, 3, 1, -6, 8, -3, -1, 2}, 5));
-        System.out.println(day1.primeCount(10, 30));
-        System.out.println(day1.isMadhavArray(new int[] {-6, -3, -3, 8, -5, -4}));
-        System.out.println(day1.isInertial(new int[] {12, 11, 4, 9, 2, 3, 10}));
+        // System.out.println(day1.isPerfectSquare(0));
+        // System.out.println(day1.nUpCount(new int[]{2, 3, 1, -6, 8, -3, -1, 2}, 5));
+        // System.out.println(day1.primeCount(10, 30));
+        // System.out.println(day1.isMadhavArray(new int[]{-6, -3, -3, 8, -5, -4}));
+        // System.out.println(day1.isInertial(new int[]{12, 11, 4, 9, 2, 3, 10}));
     }
 
     /**
@@ -45,20 +45,19 @@ public class Day1 {
     private int nUpCount(int[] a, int n) {
         int partialSum = 0;
         int count = 0;
-        int previousPartialSum = 0;
+        int previousPartialSum;
 
         for (int i = 0; i < a.length; i++) {
             previousPartialSum = partialSum;
             partialSum += a[i];
 
             if (previousPartialSum <= n && partialSum > n) {
-                count ++;
+                count++;
             }
         }
 
         return count;
     }
-
 
     /**
      * num 3
@@ -84,7 +83,7 @@ public class Day1 {
 
         for (int i = start; i <= end; i++) {
             if (isPrime(i)) {
-                count ++;
+                count++;
             }
         }
 
@@ -111,9 +110,8 @@ public class Day1 {
      * Time Complexity: The time complexity is O(n2), where n is the length of the array. This is because we have a nested loop structure to check the Madhav property.
      * <p>
      * Space Complexity: The space complexity is O(1) because we only use a fixed amount of extra space for the variables.
-     *
      */
-    private int isMadhavArray(int[ ] a) {
+    private int isMadhavArray(int[] a) {
         int len = a.length;
         int n = 1;
 
@@ -129,6 +127,7 @@ public class Day1 {
 
         // Step 2: Check the madhav property
         int sum = a[0];
+        // index is the initial position of the nex subarray
         int index = 1;
 
         // 'i' indicates the length of the subarray currently to be checked.
@@ -150,15 +149,14 @@ public class Day1 {
         return 1;
     }
 
-
     /**
      * num 5
      * <p>
-     *Time Complexity: The time complexity is O(n2) in the worst case due to the nested loop where each odd value is compared with every even value.
+     * Time Complexity: The time complexity is O(n2) in the worst case due to the nested loop where each odd value is compared with every even value.
      * <p>
      * Space Complexity: The space complexity is O(1) because we only use a fixed amount of extra space for the variables.
      */
-    private int isInertial(int[ ] a) {
+    private int isInertial(int[] a) {
 
         if (a.length == 0) {
             return 0;
