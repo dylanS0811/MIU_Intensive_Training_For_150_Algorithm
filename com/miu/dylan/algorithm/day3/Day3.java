@@ -14,6 +14,9 @@ public class Day3 {
         // System.out.println(day3.isCentered15(new int[]{1, 1, 2, 2, 1, 1})); // 0
         // System.out.println(day3.isCentered15(new int[]{1, 1, 15, -1, -1})); // 1
         // System.out.println(day3.henry(1, 3)); // 502
+        // System.out.println(day3.isDivisible(new int[] {3, 4, 3, 6, 36}, 3));
+        // System.out.println(day3.isNUnique(new int[] {7,3,3,2,4}, 11));
+        // System.out.println(day3.isSquare(6));
     }
 
     /**
@@ -102,26 +105,76 @@ public class Day3 {
     /**
      * num 16
      * <p>
-     * Time Complexity: the time complexity is
+     * Time Complexity: the time complexity is O(n), where n is the length of the array, since we need to traverse each element in the array.
      * <p>
-     * Space Complexity: the space complexity is O(1)
+     * Space Complexity: the space complexity is O(1), as we are using a constant amount of extra space.
      */
+    private int isDivisible(int [] a, int divisor) {
+
+        // Check if the array is null or its length is 0, if so return 1.
+        if (a == null || a.length == 0) {
+            return 1;
+        }
+
+        for (int element : a) {
+            if (element % divisor != 0) {
+                return 0;
+            }
+        }
+
+        return 1;
+    }
 
     /**
      * num 17
      * <p>
-     * Time Complexity: the time complexity is O(n), where n
+     * Time Complexity: the time complexity is O(n^2), where n is the length of the array. We need to iterate through each pair of elements.
      * <p>
-     * Space Complexity: the space complexity is O(1)
+     * Space Complexity: the space complexity is O(1), only constant extra space is used.
      */
+    private int isNUnique(int[] a, int n) {
+
+        if (a == null || a.length < 2) {
+            return 0;
+        }
+
+        int count = 0;
+
+        for (int i = 0; i < a.length; i++) {
+            for (int j = i + 1; j < a.length; j++) {
+
+                    if(a[i] + a[j] == n) {
+                        count++;
+                    }
+
+                    if (count > 1) {
+                        return 0;
+                    }
+            }
+        }
+        return count == 1 ? 1 : 0;
+    }
 
     /**
      * num 18
      * <p>
-     * Time Complexity: the time complexity is O(n), where n
+     * Time Complexity: the time complexity is O(√n), because we iterate from 0 to √n.
      * <p>
-     * Space Complexity: the space complexity is O(1)
+     * Space Complexity: the space complexity is O(1),only constant extra space is used.
      */
+    private int isSquare(int n) {
 
+        // Negative numbers cannot be perfect squares.
+        if (n < 0) {
+            return 0;
+        }
 
+        int x = 0;
+
+        while (x * x < n) {
+            x++;
+        }
+
+        return x * x == n ? 1 : 0;
+    }
 }
