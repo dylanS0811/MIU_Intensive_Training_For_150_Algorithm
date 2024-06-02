@@ -14,6 +14,14 @@ public class Day4 {
         // System.out.println(day4.arrayHasNoZeroes(new int[]{}));
         // System.out.println(day4.computeDepth(42));
         // System.out.println(day4.isStacked(7));
+        // int[] A1 = {1, 2, 3, -5, -5, 2, 3, 18};
+        // int[] P1 = {3, -2, 3};
+        // System.out.println(day4.matches(A1, P1)); // Output 1
+        // int[] A2 = {1, 2, 3, -5, -5, 2, 3, 18};
+        // int[] P2 = {4, -1, 3};
+        // System.out.println(day4.matches(A2, P2)); // Output 0
+        // System.out.println(day4.isSumSafe(new int[] {5, -2, 1}));
+        // System.out.println(day4.isIsolated(2097151L));
     }
 
     /**
@@ -119,12 +127,43 @@ public class Day4 {
     /**
      * num 23
      * <p>
-     * Time Complexity: the time complexity is
+     * Time Complexity: the time complexity is O(n + m), where n is the length of the array A and the m is the length of the array P
      * <p>
      * Space Complexity: the space complexity is O(1)
      */
     private int matches(int[] a, int[] p) {
+
+        int index = 0; // To track the current position in array a
+
+        for (int i = 0; i < p.length; i++) {
+
+            int length = getAbsoluteValue(p[i]); // Get the length of the current segment
+
+            boolean isPositive = p[i] > 0; // Determine if the current segment should be positive or negative
+
+            // Check all elements in the current segment
+            for (int j = 0; j < length; j++) {
+
+                if (isPositive && a[index] <= 0) {
+                    return 0;
+                }
+
+                if (!isPositive && a[index] >= 0) {
+                    return 0;
+                }
+
+                index++; // Move to next element
+            }
+        }
+
         return 1;
+    }
+
+    private int getAbsoluteValue(int num) {
+        if (num < 0) {
+            return -num;
+        }
+        return num;
     }
 
     /**
@@ -154,22 +193,65 @@ public class Day4 {
     /**
      * num 25
      * <p>
-     * Time Complexity: the time complexity is
+     * Time Complexity: the time complexity is O(n), Although we traverse the array twice, making the total number of operations O(2n),
+     * we ignore constant factors in the time complexity analysis, so the final time complexity is O(n).
      * <p>
-     * Space Complexity: the space complexity is O(1)
+     * Space Complexity: the space complexity is O(1), as we only use a constant amount of extra space.
      */
     private int isSumSafe(int[] a) {
+
+        if (a.length == 0) {
+            return 0;
+        }
+
+        int sum = 0;
+
+        for (int num : a) {
+            sum += num;
+        }
+
+        for (int num : a) {
+            if (num == sum) {
+                return 0;
+            }
+        }
+
         return 1;
     }
 
     /**
      * num 26
      * <p>
-     * Time Complexity: the time complexity is
+     * Time Complexity: the time complexity is O((log n) ^2),
+     * Extracting each digit: O(log n)
+     * Checking for repeated digits: O((log n) ^2)
      * <p>
      * Space Complexity: the space complexity is O(1)
      */
     private int isIsolated(long n) {
+
+        // We should maintain rigor, Because when n equals 2,097,151, cubing it will cause an ArrayIndexOutOfBoundsException.
+        if (n < 1 || n >= 2097151) {
+            return -1;
+        }
+
+        long square = n * n;
+        long cube = n * n * n;
+        boolean[] digitsInSquare = new boolean[10];
+
+        // n % 10 is the rightmost digit of n, n = n/10 shifts the digits of n one place to the right.
+        while (square > 0) {
+            digitsInSquare[(int) (square % 10)] = true;
+            square /= 10;
+        }
+
+        while (cube > 0) {
+            if (digitsInSquare[(int) cube % 10]) {
+                return 0;
+            }
+            cube /= 10;
+        }
+
         return 1;
     }
 
