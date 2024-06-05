@@ -140,7 +140,6 @@ public class Day5 {
 
     }
 
-
     /**
      * num 31
      * <p>
@@ -184,7 +183,6 @@ public class Day5 {
 
         return 1;
     }
-
 
     /**
      * num 32
