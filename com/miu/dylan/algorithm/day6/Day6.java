@@ -1,6 +1,7 @@
 package com.miu.dylan.algorithm.day6;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * day6 with 5 functions
@@ -12,6 +13,9 @@ public class Day6 {
         // System.out.println(day6.smallest(4));
         // System.out.println(Arrays.toString(day6.clusterCompression(new int[]{0, 0, 0, 2, 0, 2, 0, 2, 0, 0})));
         // System.out.println((day6.isRailroadTie(new int[]{3, 3, 0, 3, 3, 0, 3, 3, 0, 3, 3})));
+        // System.out.println(day6.fullnessQuotient(9));
+        // System.out.println(day6.isPacked(new int[] {2, 2, 1, 2, 2}));
+        // System.out.println(day6.isPacked(new int[]{2, 2, 1})); // 1
     }
 
     /**
@@ -133,23 +137,93 @@ public class Day6 {
     /**
      * num 36
      * <p>
-     * Time Complexity: the time complexity is
+     * Time Complexity: the time complexity is O(log(n)),
+     * The fullnessQuotient method calls hasZeroInBase 8 times.
+     * The hasZeroInBase method has a complexity of O(log_base(n)).
+     * Although the bases differ, the difference does not significantly impact the complexity's order of magnitude,
+     * which approximates O(log(n)).
+     * Thus, the overall time complexity of the fullnessQuotient method is O(8 * log(n)), simplified to O(log(n)).
      * <p>
-     * Space Complexity: the space complexity is O(1)
+     * Space Complexity: the space complexity is O(1), since we only use a constant amount of extra space for the variables.
      */
     private int fullnessQuotient(int n) {
 
-        return 1;
+        if (n < 1) {
+            return -1;
+        }
+
+        int count = 0; // Initialize counter
+
+        // Iterate 2 to 9
+        for (int base = 2; base <= 9; base++) {
+            if (!hasZeroInBase(n, base)) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    // Helper method: check if representations of n in the given base contains a zero
+    private boolean hasZeroInBase(int n, int base) {
+
+        while (n > 0) {
+
+            // If the current digit is zero, return true
+            if (n % base == 0) {
+                return true;
+            }
+
+            // Divide n by the current base to move to the next digit
+            n /= base;
+
+        }
+
+        // If no zero is found, return false
+        return false;
+
     }
 
     /**
      * num 37
      * <p>
-     * Time Complexity: the time complexity is
+     * Time Complexity: the time complexity is O(n * m), where n is the length of the array and m is the number of distinct elements in the array.
      * <p>
-     * Space Complexity: the space complexity is O(1)
+     * Space Complexity: the space complexity is O(n), because we use a hashMap to store the count of each number.
      */
     private int isPacked(int[] a) {
+
+        // Crete a counter to record the occurrence of each number
+        HashMap<Integer, Integer> countMap = new HashMap<>();
+
+        // Traverse the array to fill counter
+        for (int num : a) {
+            if (num <= 0) {
+                return 0; // If there is non-positive number, return 0
+            }
+            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+        }
+
+        // Traverse the array again to check if each number meets the count and continuity requirements
+        for (int i = 0; i < a.length; ) {
+
+            int num = a[i];
+            int count = countMap.get(num);
+
+            if (count != num) {
+                return 0;
+            }
+
+            // Check continuity
+            for (int j = 0; j < num; j++) {
+                if (i + j > a.length || a[i + j] != num) {
+                    return 0; // If not continuous, return 0
+                }
+            }
+
+            // Note: not i++, for moving to next unchecked number
+            i += num;
+        }
 
         return 1;
     }
